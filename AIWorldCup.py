@@ -49,6 +49,17 @@ TH = 2
 ACTIVE = 3
 TOUCH = 4
 
+# Role
+GK = 0
+D1 = 1
+D2 = 2
+F1 = 3
+F2 = 4
+
+# For String
+TEAMS = ['RED', 'BLUE']
+ROLES = ['GK', 'D1', 'D2', 'F1', 'F2']
+
 class Received_Image(object):
     def __init__(self, resolution, colorChannels):
         self.resolution = resolution
@@ -82,6 +93,14 @@ class Frame(object):
         self.reset_reason = None
         self.subimages = None
         self.coordinates = None
+
+# 플레이어 클래스
+# 위치와 touch여부
+class Player(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.touch = False
 
 class Component(ApplicationSession):
     """
@@ -138,6 +157,10 @@ class Component(ApplicationSession):
             self.end_of_frame = False
             self.received_frame = Frame()
             self.image = Received_Image(self.resolution, self.colorChannels)
+
+            #플레이어 초기화
+            self.players = [[Player(0,0,0) for role in [GK, D1, D2, F1, F2]] for team in [MY_TEAM, OP_TEAM]]
+            
             return
 ##############################################################################
 
@@ -196,6 +219,16 @@ class Component(ApplicationSession):
             # self.image.update_image(received_subimages)
         if 'coordinates' in f:
             self.received_frame.coordinates = f['coordinates']
+            # Set players
+            for team in [MY_TEAM, OP_TEAM]:
+                for role in [GK, D1, D2, F1, F2]:
+                    self.players[team][role].x = self.received_frame.coordinates[team][role][X]
+                    self.players[team][role].y = self.received_frame.coordinates[team][role][Y]
+                    self.players[team][role].touch = self.received_frame.coordinates[team][role][TOUCH]
+                    if self.players[team][role].touch:
+                        self.ball.before_touch = self.ball.last_touch
+                        self.ball.last_touch = (team, role)
+
         if 'EOF' in f:
             self.end_of_frame = f['EOF']
             #self.printConsole(self.received_frame.time)
@@ -207,6 +240,13 @@ class Component(ApplicationSession):
         if (self.end_of_frame):
             #self.printConsole("end of frame")
 
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            for team in [MY_TEAM, OP_TEAM]:
+                for role in [GK, D1, D2, F1, F2]:
+                    print("x coordinate : ",self.players[team][role].x = self.received_frame.coordinates[team][role][X])
+                    print("y coordinate : ",self.players[team][role].y = self.received_frame.coordinates[team][role][Y])
+                    print("touch coordinate : ",self.players[team][role].touch = self.received_frame.coordinates[team][role][TOUCH])
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             if (self.received_frame.reset_reason == GAME_START):
                 if (not self.received_frame.half_passed):
                     set_comment(self, "Game has begun")
