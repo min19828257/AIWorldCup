@@ -7,6 +7,6 @@ centralWidgetVisible: 1
 selectionDisabled: 0
 viewpointLocked: 0
 orthographicViewHeight: 1
-textFiles: 2 "../../../../../usr/local/webots/projects/robots/robotis/darwin-op/controllers/op3_motion_player/Op3MotionPlayer.cpp" "../../../../../usr/local/webots/projects/robots/robotis/darwin-op/controllers/op3_motion_player/main.cpp" "examples/commentator_skeleton_py/commentator_skeleton.py"
+textFiles: 0 "examples/commentator_skeleton_py/commentator_skeleton.py"
 renderingDevicePerspectives: referee:cam_b;1;0.26875;0.588517;0.0163934
 renderingDevicePerspectives: referee:cam_a;1;0.0666667;0;0

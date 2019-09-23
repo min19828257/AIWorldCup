@@ -478,6 +478,7 @@ class Component(ApplicationSession):
         return None
 
     def pass_ball(self):
+        print("pass_ ball()")
         if self.prev_sender == self.receiver or self.prev_receiver == self.sender :# and not None in [self.prev_sender, self.prev_receiver, self.sender, self.receiver] :
             self.sender = self.prev_sender
             self.receiver = self.prev_receiver
@@ -534,6 +535,7 @@ class Component(ApplicationSession):
     def receive_ball(self) :
         # if receiver does not exist, do nothing
         if self.receiver == None :
+            self.printConsole("receiver doesn't exist")
             return
 
         goal_dist = helper.dist(4.0, self.cur_posture[self.receiver][X], 0, self.cur_posture[self.receiver][Y])
@@ -543,10 +545,13 @@ class Component(ApplicationSession):
             return
         # if receiver is in shoot chance, receiver try to shoot
         if self.shoot_chance(self.receiver) :
+            self.printConsole("reciever get a chance to shoot!!")
             if goal_dist > 0.3 * self.field[X] / 2:
+                self.printConsole("Reciever try to dribble")
                 self.actions(self.receiver, 'dribble',refine=True)
                 return
             else :
+                self.printConsole("Reciever try to kick")
                 self.actions(self.receiver, 'kick')
                 return
 
@@ -558,6 +563,7 @@ class Component(ApplicationSession):
             if s2risFace and r2sisFace :
                 if self.cur_posture[self.receiver][TH] > 0 or self.cur_posture[self.receiver][TH] < -3 :
                     self.actions(self.receiver,'follow', [self.prev_posture[self.receiver][X], self.prev_posture[self.receiver][Y] - 0.5 * self.field[Y]])
+                    self.printConsole("stop!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     return
                 self.actions(self.receiver, 'follow',[self.prev_posture[self.receiver][X], self.prev_posture[self.receiver][Y] + 0.5 * self.field[Y]])
                 return
@@ -569,16 +575,19 @@ class Component(ApplicationSession):
         receiver_ball_dist = helper.dist(self.cur_ball[X], self.cur_posture[self.receiver][X], self.cur_ball[Y],self.cur_posture[self.receiver][Y])
         # if ball is close to receiver
         if receiver_ball_dist > 0.3 * self.field[X] / 2 :
+            self.printConsole("ball is close to receiver")
             self.actions(self.receiver, 'follow', [r_point[X], r_point[Y]],refine=True)
             return
 
         r2bisFace, _ = self.is_facing_target(self.receiver, self.cur_ball[X], self.cur_ball[Y], 4)
         if not r2bisFace :
+            self.printConsole("receiver is follow")
             self.actions(self.receiver, 'follow',refine=True)
             return
         # if receiver is moving to our goal area
         if self.cur_posture[self.receiver][X] < - 0.8 * self.field[X] / 2 :
             if self.cur_posture[self.receiver][X] - self.prev_posture[self.receiver][X] < 0 :
+                self.printConsole("receiver is backward")
                 self.actions(self.receiver, 'backward')
 
         self.actions(self.receiver, 'dribble')
@@ -725,12 +734,12 @@ class Component(ApplicationSession):
 
         # a basic goalkeeper rulbased algorithm
         def goalkeeper(self, id):
-            # default desired position
-            #x = (-self.field[X] / 2) + (self.robot_size[id] / 2) + 0.05
-            #y = max(min(self.cur_ball[Y], (self.goal[Y] / 2 - self.robot_size[id] / 2)),
-            #        -self.goal[Y] / 2 + self.robot_size[id] / 2)
-            x=0
-            y=0
+            # # default desired position
+
+            return
+            x = (-self.field[X] / 2) + (self.robot_size[id] / 2) + 0.05
+            y = max(min(self.cur_ball[Y], (self.goal[Y] / 2 - self.robot_size[id] / 2)),
+                    -self.goal[Y] / 2 + self.robot_size[id] / 2)
 
             # if the robot is inside the goal, try to get out
             if (self.cur_posture[id][X] < -self.field[X] / 2):
@@ -777,6 +786,7 @@ class Component(ApplicationSession):
                     # otherwise
                     else:
                         self.set_target_position(id, x, y, 1.4, 5.0, 0.4, True)
+
 
         # a basic defender rulebased algorithm
         def defender(self, id):
@@ -948,6 +958,7 @@ class Component(ApplicationSession):
                 self.receiver = None
             # check if sender exists
             if self.set_sender_condition() :
+                self.printConsole("sender exists!!")
                 self.sender = self.set_sender( _player_list)
             # check if receiver exists
             if self.set_receiver_condition():
@@ -964,6 +975,14 @@ class Component(ApplicationSession):
 
             default_rulebased(self, _player_list)
             return
+
+        #가장 빠른 공격수 공격
+        def attack(self, id):
+            self.face_specific_position(id, self.cur_ball[X], self.cur_ball[Y])
+            self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, False)
+            # self.atk_idx may try to shoot if condition meets
+            if (self.shoot_chance(id) and self.cur_ball[X] < 0.3 * self.field[X] / 2):
+                self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
 
         # initiate empty frame
         if (self.end_of_frame):
@@ -998,6 +1017,7 @@ class Component(ApplicationSession):
             self.end_of_frame = f['EOF']
 
         if (self.end_of_frame):
+            #self.printConsole(self.received_frame.game_state)
             # to get the image at the end of each frame use the variable:
             # self.image.ImageBuffer
 
@@ -1014,7 +1034,6 @@ class Component(ApplicationSession):
 
                 # this example does not do anything at episode end
                 pass
-
             if (self.received_frame.reset_reason == HALFTIME):
                 # halftime is met - from next frame, self.received_frame.half_passed will be set to True
                 # although the simulation switches sides,
@@ -1023,21 +1042,39 @@ class Component(ApplicationSession):
 
                 # this example does not do anything at halftime
                 pass
-
             ##############################################################################
             if (self.received_frame.game_state == STATE_DEFAULT):
                 # robot functions in STATE_DEFAULT
                 # goalkeeper simply executes goalkeeper algorithm on its own
-                goalkeeper(self, 0)
+                #goalkeeper(self, 0)
+
+
+                    #self.actions(self.atk_idx, 'kick')
 
                 # defenders and forwards can pass ball to each other if necessary
-                passing_play(self, [1, 2, 3, 4])
+                #passing_play(self, [1, 2, 3, 4])
+                
+                defender(self, 1)
+                forward(self, 2)
+                forward(self, 3)
+                forward(self, 4)
+
+                # 1개의 수비수 3개의 공격수 라인업
+                #(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
+                #defender(self,1)
+                #defender(self,2)
+                #attack(self,3)
+                #attack(self,4)
+
+                self.printConsole("default state")
+                passing_play(self, [1,2,3,4])
                 set_wheel(self, self.wheels)
             ##############################################################################
             elif (self.received_frame.game_state == STATE_KICKOFF):
                 #  if the ball belongs to my team, initiate kickoff
-                if (self.received_frame.ball_ownership):
-                    self.set_target_position(4, 0, 0, 1.4, 3.0, 0.4, False)
+                
+                #if (self.received_frame.ball_ownership):
+                    #self.set_target_position(4, 0, 0, 1.4, 3.0, 0.4, False)
 
                 set_wheel(self, self.wheels)
             ##############################################################################

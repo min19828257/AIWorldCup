@@ -221,7 +221,7 @@ class Component(ApplicationSession):
         if (self.end_of_frame):
             #self.printConsole("ball's position (",self.ball_position.x,",",self.ball_position.y,")")
             #set_comment(self, "Game has begun")
-            self.printConsole("x , y : {:.2} {:.2}".format(self.ball_position.x,self.ball_position.y))
+        #    self.printConsole("x , y : {:.2} {:.2}".format(self.ball_position.x,self.ball_position.y))
 
             if (self.received_frame.reset_reason == GAME_START):
                 if (not self.received_frame.half_passed):
