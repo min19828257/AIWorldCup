@@ -407,6 +407,7 @@ class Component(ApplicationSession):
         def goalkeeper(self, id):
 
             self.set_target_position(id, 1, 1, 1.4, 5.0, 0.4, False)
+            return
             # # default desired position
             # x = (-self.field[X] / 2) + (self.robot_size[id] / 2) + 0.05
             # y = max(min(self.cur_ball[Y], (self.goal[Y] / 2 - self.robot_size[id] / 2)),
@@ -460,7 +461,8 @@ class Component(ApplicationSession):
 
         # a basic defender rulebased algorithm
         def defender(self, id):
-            self.set_target_position(id, 1, 1, 1.4, 5.0, 0.4, False)
+            self.set_target_position(id, -6, 5, 1.4, 5.0, 0.4, False)
+            return
             # # if the robot is inside the goal, try to get out
             # if (self.cur_posture[id][X] < -self.field[X] / 2):
             #     if (self.cur_posture[id][Y] < 0):
@@ -523,7 +525,8 @@ class Component(ApplicationSession):
 
         # a basic forward rulebased algorithm
         def forward(self, id):
-            self.set_target_position(id, 1, 1, 1.4, 3.5, 0.6, False)
+            self.set_target_position(id, -5, 5, 1.4, 3.5, 0.6, False)
+            return
             # if the robot is blocking the ball's path toward opponent side
             # if (self.cur_ball[X] > -0.3 * self.field[X] / 2 and self.cur_ball[X] < 0.3 * self.field[X] / 2 and
             #         self.cur_posture[id][X] > self.cur_ball[X] + 0.1 and abs(
@@ -600,6 +603,11 @@ class Component(ApplicationSession):
             if (self.shoot_chance(id) and self.cur_ball[X] < 0.3 * self.field[X] / 2):
                 self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
 
+        #자살골용 주변 분산
+        def go_away(self, id):
+            self.set_target_position(id, 3, 2.5, 1.4, 5.0, 0.4, True)
+            return
+
         # initiate empty frame
         if (self.end_of_frame):
             self.received_frame = Frame()
@@ -662,11 +670,15 @@ class Component(ApplicationSession):
             ##############################################################################
             if (self.received_frame.game_state == STATE_DEFAULT):
                 # robot functions in STATE_DEFAULT
+
+                #go_away(self,0)
+                self.set_target_position(0, -2, 2.5, 1.4, 5.0, 0.4, True)
                 #goalkeeper(self, 0)
-                #defender(self, 1)
-                #defender(self, 2)
-                #forward(self, 3)
-                #forward(self, 4)
+
+                # defender(self, 1)
+                # defender(self, 2)
+                # forward(self, 3)
+                # forward(self, 4)
 
                 #블루팀의 공격수 3번,4번의 공격(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
                 attack(self,3)
@@ -676,18 +688,19 @@ class Component(ApplicationSession):
 
                 ##특정 위치로 모든 로봇을 옮기기
                 #goalkeeper(self, 0)
-                #defender(self, 1)
-                #defender(self, 2)
-                #forward(self, 3)
-                #forward(self, 4)
 
                 set_wheel(self, self.wheels)
                 return
             ##############################################################################
             elif (self.received_frame.game_state == STATE_KICKOFF):
                 #  if the ball belongs to my team, initiate kickoff
-                if (self.received_frame.ball_ownership):
-                    self.set_target_position(4, 0, 0, 1.4, 3.0, 0.4, False)
+                # if (self.received_frame.ball_ownership):
+                #     self.set_target_position(4, 0, 0, 1.4, 3.0, 0.4, False)
+
+                # defender(self, 1)
+                # defender(self, 2)
+                # forward(self, 3)
+                # forward(self, 4)
 
                 set_wheel(self, self.wheels)
             ##############################################################################

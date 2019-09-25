@@ -478,7 +478,7 @@ class Component(ApplicationSession):
         return None
 
     def pass_ball(self):
-        print("pass_ ball()")
+        #print("pass_ ball()!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         if self.prev_sender == self.receiver or self.prev_receiver == self.sender :# and not None in [self.prev_sender, self.prev_receiver, self.sender, self.receiver] :
             self.sender = self.prev_sender
             self.receiver = self.prev_receiver
@@ -491,6 +491,10 @@ class Component(ApplicationSession):
 
     def send_ball(self) :
         if self.sender == None :
+            self.printConsole("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+            self.face_specific_position(3, self.cur_ball[X], self.cur_ball[Y])
+            self.set_target_position(3, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, False)
+            self.actions(3, 'backward')
             return
 
         goal_dist = helper.dist(4.0, self.cur_posture[self.sender][X], 0, self.cur_posture[self.sender][Y])
@@ -500,7 +504,8 @@ class Component(ApplicationSession):
                 self.actions(self.sender, 'dribble',refine=True)
                 return
             else :
-                self.actions(self.sender, 'kick')
+                ##self.actions(self.sender, 'kick')
+                self.actions(self.sender, 'dribble')
                 return
 
         # if the receiver exists, get the distance between the sender and the receiver
@@ -508,28 +513,29 @@ class Component(ApplicationSession):
         if not self.receiver == None :
             sender_receiver_dist = helper.dist(self.cur_posture[self.sender][X], self.cur_posture[self.receiver][X],self.cur_posture[self.sender][Y], self.cur_posture[self.receiver][Y])
 
-        # if the sender is close to the receiver, the sender kicks the ball
+        # # # if the sender is close to the receiver, the sender kicks the ball
         if not sender_receiver_dist == None :
             if sender_receiver_dist < 0.3 and not self.cur_posture[self.receiver][TOUCH]:
-                self.actions(self.sender, 'kick')
+                ##self.actions(self.sender, 'kick')
+                self.actions(self.sender, 'dribble')
                 return
 
-        ift, theta_diff = self.is_facing_target(self.sender, self.cur_ball[X], self.cur_ball[Y])
-        if not ift :
-            # after the sender kicks, it stops
-            if theta_diff > math.pi * 3/4 :
-                self.actions(self.sender, None)
-                return
-            else :
-                self.actions(self.sender, 'follow',refine=True)
-                return
+        # # ift, theta_diff = self.is_facing_target(self.sender, self.cur_ball[X], self.cur_ball[Y])
+        # # if not ift :
+        # #     # after the sender kicks, it stops
+        # #     if theta_diff > math.pi * 3/4 :
+        # #         self.actions(self.sender, None)
+        # #         return
+        # #     else :
+        # #         self.actions(self.sender, 'follow',refine=True)
+        # #         return
 
         # if the ball is in front of the sender and sender is moving backward
         if self.cur_posture[self.sender][X] < - 0.8 * self.field[X] / 2 :
             if self.cur_posture[self.sender][X] - self.prev_posture[self.sender][X] < 0 :
                 self.actions(self.sender, 'backward')
 
-        self.actions(self.sender, 'dribble',refine=True)
+        ##self.actions(self.sender, 'dribble',refine=True)
         return
 
     def receive_ball(self) :
@@ -552,7 +558,8 @@ class Component(ApplicationSession):
                 return
             else :
                 self.printConsole("Reciever try to kick")
-                self.actions(self.receiver, 'kick')
+                ##self.actions(self.receiver, 'kick')
+                self.actions(self.receiver, 'dribble')
                 return
 
         # if sender exists
@@ -563,7 +570,6 @@ class Component(ApplicationSession):
             if s2risFace and r2sisFace :
                 if self.cur_posture[self.receiver][TH] > 0 or self.cur_posture[self.receiver][TH] < -3 :
                     self.actions(self.receiver,'follow', [self.prev_posture[self.receiver][X], self.prev_posture[self.receiver][Y] - 0.5 * self.field[Y]])
-                    self.printConsole("stop!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     return
                 self.actions(self.receiver, 'follow',[self.prev_posture[self.receiver][X], self.prev_posture[self.receiver][Y] + 0.5 * self.field[Y]])
                 return
@@ -590,7 +596,7 @@ class Component(ApplicationSession):
                 self.printConsole("receiver is backward")
                 self.actions(self.receiver, 'backward')
 
-        self.actions(self.receiver, 'dribble')
+        ##self.actions(self.receiver, 'dribble')
         return
 
     # let robot with id 'id' execute an action directed by 'mode'
@@ -635,19 +641,21 @@ class Component(ApplicationSession):
             return
         if mode == 'kick' :
             # kick the ball
-            if target_pts == None :
-                target_pts = self.cur_ball
-            if params == None :
-                params = [1.4, 5.0, 0.8, True]
-            if self.end_count == 0 and not self.touch[id] :
-                self.end_count = self.cur_count + 10 # 0.05 * cnt seconds
-            self.player_state[id] = 'kick'
-            if self.touch[id] :
-                self.player_state[id] = 'stop'
-            if not self.touch[id] :
-                self.touch[id] = self.cur_posture[id][TOUCH]
-            if self.player_state[id] == 'stop' :
-                params = [0.0, 0.0, 0.0, False]
+            # if target_pts == None :
+            #     target_pts = self.cur_ball
+            # if params == None :
+            #     params = [1.4, 5.0, 0.8, True]
+            # if self.end_count == 0 and not self.touch[id] :
+            #     self.end_count = self.cur_count + 10 # 0.05 * cnt seconds
+            # self.player_state[id] = 'kick'
+            # if self.touch[id] :
+            #     self.player_state[id] = 'stop'
+            # if not self.touch[id] :
+            #     self.touch[id] = self.cur_posture[id][TOUCH]
+            # if self.player_state[id] == 'stop' :
+            #     params = [0.0, 0.0, 0.0, False]
+            target_pts = self.cur_ball
+            params = [1.4, 5.0, 0.8, True]
             self.set_target_position(id, target_pts[X], target_pts[Y], params[0], params[1], params[2], params[3])
             return
         if mode == 'stop' :
@@ -736,7 +744,9 @@ class Component(ApplicationSession):
         def goalkeeper(self, id):
             # # default desired position
 
+            self.set_target_position(id, -2, 10, 1.4, 5.0, 0.4, False)
             return
+
             x = (-self.field[X] / 2) + (self.robot_size[id] / 2) + 0.05
             y = max(min(self.cur_ball[Y], (self.goal[Y] / 2 - self.robot_size[id] / 2)),
                     -self.goal[Y] / 2 + self.robot_size[id] / 2)
@@ -790,6 +800,10 @@ class Component(ApplicationSession):
 
         # a basic defender rulebased algorithm
         def defender(self, id):
+
+            # self.set_target_position(id, -2, 2, 1.4, 5.0, 0.4, False)
+            # return
+
             # if the robot is inside the goal, try to get out
             if (self.cur_posture[id][X] < -self.field[X] / 2):
                 if (self.cur_posture[id][Y] < 0):
@@ -976,13 +990,39 @@ class Component(ApplicationSession):
             default_rulebased(self, _player_list)
             return
 
+        #패스용 주변으로 분산
+        def go_away_pass(self, id):
+            self.set_target_position(id, 3, 2, 1.4, 5.0, 0.4, True)
+            return
+
+        #자살골용 주변 분산
+        def go_away_sucide(self, id):
+            self.set_target_position(id, -1, 2.5, 1.4, 5.0, 0.4, True)
+            return
+
         #가장 빠른 공격수 공격
         def attack(self, id):
             self.face_specific_position(id, self.cur_ball[X], self.cur_ball[Y])
             self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, False)
             # self.atk_idx may try to shoot if condition meets
             if (self.shoot_chance(id) and self.cur_ball[X] < 0.3 * self.field[X] / 2):
-                self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
+               self.actions(id, 'backward')
+               self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
+
+######################################################## 상황 #######################################################
+
+        #shooting directly
+        def shoot_direct():
+                attack(self,3)
+                attack(self,4)
+                goalkeeper(self,0)
+
+        #자살골 상황
+        def suicide_shoot():
+                go_away_sucide(self,3)
+                go_away_sucide(self,1)
+                go_away_sucide(self,0)
+                self.set_target_position(4, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
 
         # initiate empty frame
         if (self.end_of_frame):
@@ -1035,6 +1075,7 @@ class Component(ApplicationSession):
                 # this example does not do anything at episode end
                 pass
             if (self.received_frame.reset_reason == HALFTIME):
+                self.printConsole("half time")
                 # halftime is met - from next frame, self.received_frame.half_passed will be set to True
                 # although the simulation switches sides,
                 # coordinates and images given to your AI soccer algorithm will stay the same
@@ -1044,30 +1085,62 @@ class Component(ApplicationSession):
                 pass
             ##############################################################################
             if (self.received_frame.game_state == STATE_DEFAULT):
+
                 # robot functions in STATE_DEFAULT
                 # goalkeeper simply executes goalkeeper algorithm on its own
-                #goalkeeper(self, 0)
-
+                # goalkeeper(self, 0)
 
                     #self.actions(self.atk_idx, 'kick')
+
+                # 패스
+                # # defender(self, 2)
+                # # go_away_pass(self,1)
+                # # go_away_pass(self,4)
+                # # go_away_pass(self,3)
+
+                # # player = 2
+                # # measured_dist_pur = helper.dist(self.cur_ball[X], self.cur_posture[player][X], self.cur_ball[Y],self.cur_posture[player][Y])
+                # # self.set_target_position(player, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
+
+                # # if(measured_dist_pur < 2):
+                    
+                # #     purpose = self.direction_angle(player, self.cur_ball[X], self.cur_ball[Y])
+                # #     self.angle(player, purpose)
+
+                # #     self.set_target_position(player, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
 
                 # defenders and forwards can pass ball to each other if necessary
                 #passing_play(self, [1, 2, 3, 4])
                 
-                defender(self, 1)
-                forward(self, 2)
-                forward(self, 3)
-                forward(self, 4)
+                #defender(self, 1)
+                #forward(self, 2)
+                #forward(self, 3)
+                #forward(self, 4)
 
-                # 1개의 수비수 3개의 공격수 라인업
-                #(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
-                #defender(self,1)
-                #defender(self,2)
-                #attack(self,3)
-                #attack(self,4)
+                # 자살골
+                #suicide_shoot()
+
+                ## 골넣기
+                #shoot_direct()
+
+                ## Struggle & Steal
+                #player_rulebased-B의 struggle 함수 활성화 시키기 + shoot_direct()
+                #shoot_direct()
+
+                ## Defence against oponent robots
+                # defender(self, 1)
+                # defender(self, 2)
+                # defender(self, 3)
+                # defender(self, 4)
+
+                # 액션별 정리
+                #self.actions(1, 'kick')
+                #self.actions(4, 'dribble')
+                #self.actions(4, 'backward')
+                #self.actions(1, 'stop')
 
                 self.printConsole("default state")
-                passing_play(self, [1,2,3,4])
+                #passing_play(self, [1,2,3])
                 set_wheel(self, self.wheels)
             ##############################################################################
             elif (self.received_frame.game_state == STATE_KICKOFF):
@@ -1088,11 +1161,11 @@ class Component(ApplicationSession):
             ##############################################################################
             elif (self.received_frame.game_state == STATE_CORNERKICK):
                 # just play as simple as possible
-                goalkeeper(self, 0)
-                defender(self, 1)
-                defender(self, 2)
-                forward(self, 3)
-                forward(self, 4)
+                # goalkeeper(self, 0)
+                # defender(self, 1)
+                # defender(self, 2)
+                # forward(self, 3)
+                # forward(self, 4)
 
                 set_wheel(self, self.wheels)
             ##############################################################################
