@@ -672,24 +672,30 @@ class Component(ApplicationSession):
                 # robot functions in STATE_DEFAULT
 
                 #go_away(self,0)
-                #self.set_target_position(0, -2, 2.5, 1.4, 5.0, 0.4, True)
-                goalkeeper(self, 0)
 
+                # 골키퍼 다른구역에 보내기
+                #self.set_target_position(0, -2, 2.5, 1.4, 5.0, 0.4, True)
+
+                # 골키퍼역할 제대로하기
+                # goalkeeper(self, 0)
+
+                # 수비(1,2) 공격(3,4) 명령
                 # defender(self, 1)
                 # defender(self, 2)
                 # forward(self, 3)
                 # forward(self, 4)
 
-                #블루팀의 공격수 3번,4번의 공격(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
-                #attack(self,4)
+                # 블루팀의 공격(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
+                # attack(self,4)
                 # attack(self,1)
                 # attack(self,2)
                 # attack(self,3)
 
-                self.set_target_position(1, 3, 3, 1.4, 5.0, 0.4, True)
-                self.set_target_position(2, 3, 3, 1.4, 5.0, 0.4, True)
-                self.set_target_position(3, 3, 3, 1.4, 5.0, 0.4, True)
-                self.set_target_position(4, 3, 3, 1.4, 5.0, 0.4, True)
+                # 선수들 특정 영역으로 보내기
+                # self.set_target_position(1, 3, 3, 1.4, 5.0, 0.4, True)
+                # self.set_target_position(2, 3, 3, 1.4, 5.0, 0.4, True)
+                # self.set_target_position(3, 3, 3, 1.4, 5.0, 0.4, True)
+                # self.set_target_position(4, 3, 3, 1.4, 5.0, 0.4, True)
 
                 self.printConsole("blue team : STATE_DEFAULT")
 
