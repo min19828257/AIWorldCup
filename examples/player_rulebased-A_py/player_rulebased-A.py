@@ -1092,6 +1092,46 @@ class Component(ApplicationSession):
 
                     #self.actions(self.atk_idx, 'kick')
 
+                # Deadlock 상황
+                # set_wheel(self, self.wheels)만 주석
+
+                # redteam blueteam 전체 공격
+                # attack(self,1)
+                # attack(self,2)
+                # attack(self,3)
+                # attack(self,4)
+
+                #드리블
+                #self.actions(4, 'dribble')
+
+                ## 골넣기(장거리슈팅)
+                # shoot_direct()
+                ## 유효슈팅 + 슈팅을 막는경우(골키퍼)
+                # self.set_target_position(4, 3, 3, 1.4, 5.0, 0.4, True)
+                # self.actions(3, 'backward')
+                # self.actions(3, 'kick')
+
+                ## Struggle & Steal
+                #player_rulebased-B의 struggle 함수 활성화 시키기 + shoot_direct()
+                #shoot_direct()
+
+                ## Defence against oponent robots
+                # defender(self, 1)
+                # defender(self, 2)
+                # defender(self, 3)
+                # defender(self, 4)
+
+                # 골넣기
+                # shoot_direct()
+                # 자살골
+                # suicide_shoot()
+
+                # 1대 1상황
+                ## 상대팀 다른곳으로 보내기
+                # attack(self,2)
+                # self.set_target_position(3, -1, -3, 1.4, 5.0, 0.4, True)
+                # self.set_target_position(4, -1, -3, 1.4, 5.0, 0.4, True)
+
                 # 패스
                 # # defender(self, 2)
                 # # go_away_pass(self,1)
@@ -1111,32 +1151,23 @@ class Component(ApplicationSession):
 
                 # defenders and forwards can pass ball to each other if necessary
                 #passing_play(self, [1, 2, 3, 4])
-                
-                #defender(self, 1)
-                #forward(self, 2)
-                #forward(self, 3)
-                #forward(self, 4)
 
-                # 자살골
-                #suicide_shoot()
-
-                ## 골넣기
-                #shoot_direct()
-
-                ## Struggle & Steal
-                #player_rulebased-B의 struggle 함수 활성화 시키기 + shoot_direct()
-                #shoot_direct()
-
-                ## Defence against oponent robots
+                # 게임진행                
                 # defender(self, 1)
-                # defender(self, 2)
-                # defender(self, 3)
-                # defender(self, 4)
+                # forward(self, 2)
+                # forward(self, 3)
+                # forward(self, 4)
+
+                # 슈팅하기 (단 첫슛은 실패함)
+                # self.set_target_position(4, 3, 3, 1.4, 5.0, 0.4, True)
+                # self.actions(3, 'backward')
+                # self.actions(3, 'kick')
 
                 # 액션별 정리
                 #self.actions(1, 'kick')
                 #self.actions(4, 'dribble')
-                #self.actions(4, 'backward')
+                #self.actions(3, 'backward')
+                #self.actions(3, 'kick')
                 #self.actions(1, 'stop')
 
                 self.printConsole("default state")

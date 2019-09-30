@@ -406,58 +406,58 @@ class Component(ApplicationSession):
         # a basic goalkeeper rulbased algorithm
         def goalkeeper(self, id):
 
-            self.set_target_position(id, 1, 1, 1.4, 5.0, 0.4, False)
-            return
-            # # default desired position
-            # x = (-self.field[X] / 2) + (self.robot_size[id] / 2) + 0.05
-            # y = max(min(self.cur_ball[Y], (self.goal[Y] / 2 - self.robot_size[id] / 2)),
-            #         -self.goal[Y] / 2 + self.robot_size[id] / 2)
+            # self.set_target_position(id, 1, 1, 1.4, 5.0, 0.4, False)
+            # return
+            # default desired position
+            x = (-self.field[X] / 2) + (self.robot_size[id] / 2) + 0.05
+            y = max(min(self.cur_ball[Y], (self.goal[Y] / 2 - self.robot_size[id] / 2)),
+                    -self.goal[Y] / 2 + self.robot_size[id] / 2)
 
-            # # if the robot is inside the goal, try to get out
-            # if (self.cur_posture[id][X] < -self.field[X] / 2):
-            #     if (self.cur_posture[id][Y] < 0):
-            #         self.set_target_position(id, x, self.cur_posture[id][Y] + 0.2, 1.4, 5.0, 0.4, False)
-            #     else:
-            #         self.set_target_position(id, x, self.cur_posture[id][Y] - 0.2, 1.4, 5.0, 0.4, False)
-            # # if the goalkeeper is outside the penalty area
-            # elif (not self.in_penalty_area(self.cur_posture[id], MY_TEAM)):
-            #     # return to the desired position
-            #     self.set_target_position(id, x, y, 1.4, 5.0, 0.4, True)
-            # # if the goalkeeper is inside the penalty area
-            # else:
-            #     # if the ball is inside the penalty area
-            #     if (self.in_penalty_area(self.cur_ball, MY_TEAM)):
-            #         # if the ball is behind the goalkeeper
-            #         if (self.cur_ball[X] < self.cur_posture[id][X]):
-            #             # if the ball is not blocking the goalkeeper's path
-            #             if (abs(self.cur_ball[Y] - self.cur_posture[id][Y]) > 2 * self.robot_size[id]):
-            #                 # try to get ahead of the ball
-            #                 self.set_target_position(id, self.cur_ball[X] - self.robot_size[id], self.cur_posture[id][Y], 1.4, 5.0,
-            #                               0.4, False)
-            #             else:
-            #                 # just give up and try not to make a suicidal goal
-            #                 self.angle(id, math.pi / 2)
-            #         # if the ball is ahead of the goalkeeper
-            #         else:
-            #             desired_th = self.direction_angle(id, self.cur_ball[X], self.cur_ball[Y])
-            #             rad_diff = helper.trim_radian(desired_th - self.cur_posture[id][TH])
-            #             # if the robot direction is too away from the ball direction
-            #             if (rad_diff > math.pi / 3):
-            #                 # give up kicking the ball and block the goalpost
-            #                 self.set_target_position(id, x, y, 1.4, 5.0, 0.4, False)
-            #             else:
-            #                 # try to kick the ball away from the goal
-            #                 self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 3.0, 0.8, True)
-            #     # if the ball is not in the penalty area
-            #     else:
-            #         # if the ball is within alert range and y position is not too different
-            #         if (self.cur_ball[X] < -self.field[X] / 2 + 1.5 * self.penalty_area[X] and abs(
-            #                 self.cur_ball[Y]) < 1.5 * self.penalty_area[Y] / 2 and abs(
-            #                 self.cur_ball[Y] - self.cur_posture[id][Y]) < 0.2):
-            #             self.face_specific_position(id, self.cur_ball[X], self.cur_ball[Y])
-            #         # otherwise
-            #         else:
-            #             self.set_target_position(id, x, y, 1.4, 5.0, 0.4, True)
+            # if the robot is inside the goal, try to get out
+            if (self.cur_posture[id][X] < -self.field[X] / 2):
+                if (self.cur_posture[id][Y] < 0):
+                    self.set_target_position(id, x, self.cur_posture[id][Y] + 0.2, 1.4, 5.0, 0.4, False)
+                else:
+                    self.set_target_position(id, x, self.cur_posture[id][Y] - 0.2, 1.4, 5.0, 0.4, False)
+            # if the goalkeeper is outside the penalty area
+            elif (not self.in_penalty_area(self.cur_posture[id], MY_TEAM)):
+                # return to the desired position
+                self.set_target_position(id, x, y, 1.4, 5.0, 0.4, True)
+            # if the goalkeeper is inside the penalty area
+            else:
+                # if the ball is inside the penalty area
+                if (self.in_penalty_area(self.cur_ball, MY_TEAM)):
+                    # if the ball is behind the goalkeeper
+                    if (self.cur_ball[X] < self.cur_posture[id][X]):
+                        # if the ball is not blocking the goalkeeper's path
+                        if (abs(self.cur_ball[Y] - self.cur_posture[id][Y]) > 2 * self.robot_size[id]):
+                            # try to get ahead of the ball
+                            self.set_target_position(id, self.cur_ball[X] - self.robot_size[id], self.cur_posture[id][Y], 1.4, 5.0,
+                                          0.4, False)
+                        else:
+                            # just give up and try not to make a suicidal goal
+                            self.angle(id, math.pi / 2)
+                    # if the ball is ahead of the goalkeeper
+                    else:
+                        desired_th = self.direction_angle(id, self.cur_ball[X], self.cur_ball[Y])
+                        rad_diff = helper.trim_radian(desired_th - self.cur_posture[id][TH])
+                        # if the robot direction is too away from the ball direction
+                        if (rad_diff > math.pi / 3):
+                            # give up kicking the ball and block the goalpost
+                            self.set_target_position(id, x, y, 1.4, 5.0, 0.4, False)
+                        else:
+                            # try to kick the ball away from the goal
+                            self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 3.0, 0.8, True)
+                # if the ball is not in the penalty area
+                else:
+                    # if the ball is within alert range and y position is not too different
+                    if (self.cur_ball[X] < -self.field[X] / 2 + 1.5 * self.penalty_area[X] and abs(
+                            self.cur_ball[Y]) < 1.5 * self.penalty_area[Y] / 2 and abs(
+                            self.cur_ball[Y] - self.cur_posture[id][Y]) < 0.2):
+                        self.face_specific_position(id, self.cur_ball[X], self.cur_ball[Y])
+                    # otherwise
+                    else:
+                        self.set_target_position(id, x, y, 1.4, 5.0, 0.4, True)
 
         # a basic defender rulebased algorithm
         def defender(self, id):
@@ -672,8 +672,8 @@ class Component(ApplicationSession):
                 # robot functions in STATE_DEFAULT
 
                 #go_away(self,0)
-                self.set_target_position(0, -2, 2.5, 1.4, 5.0, 0.4, True)
-                #goalkeeper(self, 0)
+                #self.set_target_position(0, -2, 2.5, 1.4, 5.0, 0.4, True)
+                goalkeeper(self, 0)
 
                 # defender(self, 1)
                 # defender(self, 2)
@@ -681,8 +681,15 @@ class Component(ApplicationSession):
                 # forward(self, 4)
 
                 #블루팀의 공격수 3번,4번의 공격(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
-                attack(self,3)
-                attack(self,4)
+                #attack(self,4)
+                # attack(self,1)
+                # attack(self,2)
+                # attack(self,3)
+
+                self.set_target_position(1, 3, 3, 1.4, 5.0, 0.4, True)
+                self.set_target_position(2, 3, 3, 1.4, 5.0, 0.4, True)
+                self.set_target_position(3, 3, 3, 1.4, 5.0, 0.4, True)
+                self.set_target_position(4, 3, 3, 1.4, 5.0, 0.4, True)
 
                 self.printConsole("blue team : STATE_DEFAULT")
 
