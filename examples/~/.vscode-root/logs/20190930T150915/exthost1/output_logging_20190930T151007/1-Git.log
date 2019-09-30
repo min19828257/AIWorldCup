@@ -180,3 +180,17 @@ fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorld
 fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
 > git rev-parse --show-toplevel
 fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
+> git rev-parse --show-toplevel
+fatal: not a git repository: /home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/../.git/modules/examples
