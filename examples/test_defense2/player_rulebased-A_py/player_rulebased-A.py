@@ -1098,8 +1098,8 @@ class Component(ApplicationSession):
                 # redteam blueteam 전체 공격
                 # attack(self,1)
                 # attack(self,2)
-                attack(self,3)
-                attack(self,4)
+                # attack(self,3)
+                # attack(self,4)
 
                 #드리블
                 #self.actions(4, 'dribble')
@@ -1153,10 +1153,10 @@ class Component(ApplicationSession):
                 #passing_play(self, [1, 2, 3, 4])
 
                 # 게임진행                
-                # defender(self, 1)
-                # forward(self, 2)
-                # forward(self, 3)
-                # forward(self, 4)
+                defender(self, 1)
+                forward(self, 2)
+                forward(self, 3)
+                forward(self, 4)
 
                 # 슈팅하기 (단 첫슛은 실패함)
                 # self.set_target_position(4, 3, 3, 1.4, 5.0, 0.4, True)

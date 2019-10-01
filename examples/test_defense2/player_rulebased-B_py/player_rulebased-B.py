@@ -679,11 +679,11 @@ class Component(ApplicationSession):
                 # 골키퍼역할 제대로하기
                 goalkeeper(self, 0)
 
-                # 수비(1,2) 공격(3,4) 명령
-                # defender(self, 1)
-                # defender(self, 2)
-                # forward(self, 3)
-                # forward(self, 4)
+                # 수비(1,2,3,4) 명령
+                defender(self, 1)
+                defender(self, 2)
+                defender(self, 3)
+                defender(self, 4)
 
                 # 블루팀의 공격(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
                 # attack(self,4)
