@@ -622,7 +622,7 @@ class Component(ApplicationSession):
             if target_pts == None :
                 target_pts = self.predict_ball_location(3)
             if params == None :
-                params = [1.0, 3.0, 0.6, False]
+                params = [1.0, 1.0, 0.0, False]
             if refine :
                 self.set_pos_parameters(id, target_pts, params)
             self.set_target_position(id, target_pts[X], target_pts[Y], params[0], params[1], params[2], params[3])
@@ -633,7 +633,7 @@ class Component(ApplicationSession):
             if target_pts == None :
                 target_pts = self.cur_ball
             if params == None :
-                params = [1.4, 5.0, 0.8, False]
+                params = [1.4, 10.0, 0.0, False]
             if refine :
                 self.set_pos_parameters(id, target_pts, params)
             self.set_target_position(id, target_pts[X], target_pts[Y], params[0], params[1], params[2], params[3])
@@ -1008,11 +1008,11 @@ class Component(ApplicationSession):
         #가장 빠른 공격수 공격
         def attack(self, id):
             self.face_specific_position(id, self.cur_ball[X], self.cur_ball[Y])
-            self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, False)
+            self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 10.0, 0.4, False)
             # self.atk_idx may try to shoot if condition meets
             if (self.shoot_chance(id) and self.cur_ball[X] < 0.3 * self.field[X] / 2):
                self.actions(id, 'backward')
-               self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
+               self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 10.0, 0.4, True)
 
 ######################################################## 상황 #######################################################
 
@@ -1180,12 +1180,29 @@ class Component(ApplicationSession):
                 #self.actions(3, 'kick')
                 #self.actions(1, 'stop')
 
-                #다른곳으로 보내기
+                # #다른곳으로 보내기
+                # goalkeeper(self, 0)
+                # go_away(self,1)
+                # go_away(self,2)
+                # go_away(self,3)
+                # go_away(self,4)
+
+                # 공 쫓아가기
                 goalkeeper(self, 0)
-                go_away(self,1)
-                go_away(self,2)
-                go_away(self,3)
-                go_away(self,4)
+                self.actions(1,'follow')
+                self.actions(2,'follow')
+                self.actions(3,'dribble')
+                self.actions(4,'follow')
+                # self.set_target_position(1, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(2, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(3, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(4, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+
+
+                # self.set_target_position(4, self.cur_ball[X], self.cur_ball[Y], 1.4, 10.0, 0.4, True)
+                # self.actions(4,'kick')
+                # self.set_target_position(3, self.cur_ball[X], self.cur_ball[Y], 1.4, 10.0, 0.4, True)
+                # self.actions(3,'kick')
 
                 self.printConsole("default state")
                 #passing_play(self, [1,2,3])

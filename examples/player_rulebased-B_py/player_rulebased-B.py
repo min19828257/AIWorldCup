@@ -598,10 +598,10 @@ class Component(ApplicationSession):
                 #가장 빠른 공격수 공격
         def attack(self, id):
             self.face_specific_position(id, self.cur_ball[X], self.cur_ball[Y])
-            self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, False)
+            self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 10.0, 0.4, False)
             # self.atk_idx may try to shoot if condition meets
             if (self.shoot_chance(id) and self.cur_ball[X] < 0.3 * self.field[X] / 2):
-                self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 5.0, 0.4, True)
+                self.set_target_position(id, self.cur_ball[X], self.cur_ball[Y], 1.4, 10.0, 0.4, True)
 
         #자살골용 주변 분산
         def go_away(self, id):
@@ -703,12 +703,19 @@ class Component(ApplicationSession):
                 # defender(self, 3)
                 # defender(self, 4)
 
-                # 다른곳으로 보내기
-                goalkeeper(self, 0)
-                go_away(self,1)
-                go_away(self,3)
-                go_away(self,4)
-                attack(self,2)
+                # # 다른곳으로 보내기
+                # goalkeeper(self, 0)
+                # go_away(self,1)
+                # go_away(self,3)
+                # go_away(self,4)
+                # attack(self,2)
+
+                #공 쫓아가기
+                self.set_target_position(1, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                self.set_target_position(2, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                self.set_target_position(3, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                self.set_target_position(4, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+
 
                 self.printConsole("blue team : STATE_DEFAULT")
 

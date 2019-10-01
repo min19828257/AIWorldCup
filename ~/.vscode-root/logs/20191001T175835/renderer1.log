@@ -1,0 +1,4 @@
+[2019-10-01 17:59:14.149] [renderer1] [error] Unable to read file (Error: File not found (/home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/test_Robot_out/player_rulebased-A_py/player_rulebased-A.py)): Error: Unable to read file (Error: File not found (/home/kimminsu/바탕화면/AIWC/test_world/AIWorldCup/examples/test_Robot_out/player_rulebased-A_py/player_rulebased-A.py))
+    at b.<anonymous> (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1521:283)
+    at Generator.throw (<anonymous>)
+    at a (file:///usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:35:450)
