@@ -622,7 +622,7 @@ class Component(ApplicationSession):
             if target_pts == None :
                 target_pts = self.predict_ball_location(3)
             if params == None :
-                params = [1.0, 1.0, 0.0, False]
+                params = [1.0, 5.0, 0.0, False]
             if refine :
                 self.set_pos_parameters(id, target_pts, params)
             self.set_target_position(id, target_pts[X], target_pts[Y], params[0], params[1], params[2], params[3])
@@ -1101,10 +1101,10 @@ class Component(ApplicationSession):
                 # set_wheel(self, self.wheels)만 주석
 
                 # redteam blueteam 전체 공격
-                # attack(self,1)
-                # attack(self,2)
-                # attack(self,3)
-                # attack(self,4)
+                attack(self,1)
+                attack(self,2)
+                attack(self,3)
+                attack(self,4)
 
                 #드리블
                 #self.actions(4, 'dribble')

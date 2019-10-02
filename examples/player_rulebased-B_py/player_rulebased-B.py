@@ -686,10 +686,10 @@ class Component(ApplicationSession):
                 # forward(self, 4)
 
                 # 블루팀의 공격(1,공을 찾아 드리블 2.슛찬스가 났을시 슈팅시도)
-                # attack(self,4)
-                # attack(self,1)
-                # attack(self,2)
-                # attack(self,3)
+                attack(self,4)
+                attack(self,1)
+                attack(self,2)
+                attack(self,3)
 
                 # 선수들 특정 영역으로 보내기
                 # self.set_target_position(1, 3, 3, 1.4, 5.0, 0.4, True)
@@ -711,10 +711,10 @@ class Component(ApplicationSession):
                 # attack(self,2)
 
                 #공 쫓아가기
-                self.set_target_position(1, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
-                self.set_target_position(2, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
-                self.set_target_position(3, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
-                self.set_target_position(4, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(1, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(2, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(3, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
+                # self.set_target_position(4, self.cur_ball[X], self.cur_ball[Y], 1.4, 1.5, 0.4, False)
 
 
                 self.printConsole("blue team : STATE_DEFAULT")
