@@ -14,8 +14,8 @@ Project
 개요
 경기영상 속 상황 및 로봇들의 움직임에 대한 정보를 분석하여 해설을 하는 소프트웨어다.
 
+<img src="https://user-images.githubusercontent.com/36617103/68063594-a4c60880-fd55-11e9-9222-c045ec064b9a.PNG" width="90%"></img>
 
-https://user-images.githubusercontent.com/36617103/68063594-a4c60880-fd55-11e9-9222-c045ec064b9a.PNG
 
 
 # AI World Cup Simulation
