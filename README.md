@@ -1,3 +1,15 @@
+AI World Cup Commentator
+Project
+2019-09-01 ~ 2019-10-15
+구성
+김민수, 동명대학교
+이현수, 선문대학교
+정규호, 숭실대학교
+김대진, 성균관대학교
+조소영, 광운대학교
+개요
+경기영상 속 상황 및 로봇들의 움직임에 대한 정보를 분석하여 해설을 하는 소프트웨어다.
+
 # AI World Cup Simulation
 
 The AI World Cup simulation environment. Participants of [AI World Cup](http://aiworldcup.org/) can download the program to develop their own algorithm for AI Soccer, AI Commentator, or AI Reporter. After development, participants of AI World Cup can submit their programs to [aiwc@rit.kaist.ac.kr](aiwc@rit.kaist.ac.kr). We will check if your program runs correctly on our server where the qualifying/main rounds will be run and reply back as soon as possible. Regarding the deadlines, please refer to our [AI World Cup Website](http://aiworldcup.org/).
