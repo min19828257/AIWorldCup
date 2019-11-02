@@ -14,6 +14,10 @@ Project
 개요
 경기영상 속 상황 및 로봇들의 움직임에 대한 정보를 분석하여 해설을 하는 소프트웨어다.
 
+
+https://user-images.githubusercontent.com/36617103/68063594-a4c60880-fd55-11e9-9222-c045ec064b9a.PNG
+
+
 # AI World Cup Simulation
 
 The AI World Cup simulation environment. Participants of [AI World Cup](http://aiworldcup.org/) can download the program to develop their own algorithm for AI Soccer, AI Commentator, or AI Reporter. After development, participants of AI World Cup can submit their programs to [aiwc@rit.kaist.ac.kr](aiwc@rit.kaist.ac.kr). We will check if your program runs correctly on our server where the qualifying/main rounds will be run and reply back as soon as possible. Regarding the deadlines, please refer to our [AI World Cup Website](http://aiworldcup.org/).
